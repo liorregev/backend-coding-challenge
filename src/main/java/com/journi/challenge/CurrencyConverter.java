@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.boot.json.JacksonJsonParser;
 
+import javax.inject.Named;
+import javax.inject.Singleton;
 import java.io.File;
 import java.io.FileReader;
 import java.net.URL;
@@ -12,6 +14,8 @@ import java.util.*;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
+@Named
+@Singleton
 public class CurrencyConverter {
     private final Map<String, String> supportedCountriesCurrency;
     private final Map<String, Double> currencyEurRate;
