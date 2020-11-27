@@ -75,7 +75,7 @@ class PurchasesControllerTest {
         assertEquals(request.getCustomerName(), savedPurchase.getCustomerName());
         assertEquals(request.getInvoiceNumber(), savedPurchase.getInvoiceNumber());
         assertEquals(parseInstant(request.getDateTime()), savedPurchase.getTimestamp());
-        assertEquals(currencyConverter.convertCurrencyToEur(request.getCurrencyCode(), request.getAmount()), savedPurchase.getTotalValue());
+        assertEquals(currencyConverter.convertCurrencyToEur(request.getCurrencyCode(), request.getAmount()).orElse(0.0), savedPurchase.getTotalValue());
     }
 
 

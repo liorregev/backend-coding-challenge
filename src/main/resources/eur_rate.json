@@ -127,6 +127,10 @@
     {
       "currency": "ZAR",
       "rate": "17.2746"
+    },
+    {
+      "currency": "EUR",
+      "rate": "1.0"
     }
   ]
 }

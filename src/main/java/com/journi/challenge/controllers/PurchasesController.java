@@ -35,7 +35,7 @@ public class PurchasesController {
                 OffsetDateTime.parse(purchaseRequest.getDateTime(), DateTimeFormatter.ISO_DATE_TIME).toInstant(),
                 purchaseRequest.getProductIds(),
                 purchaseRequest.getCustomerName(),
-                currencyConverter.convertCurrencyToEur(purchaseRequest.getCurrencyCode(), purchaseRequest.getAmount())
+                currencyConverter.convertCurrencyToEur(purchaseRequest.getCurrencyCode(), purchaseRequest.getAmount()).orElseGet(purchaseRequest::getAmount)
         );
         purchasesRepository.save(newPurchase);
         return newPurchase;

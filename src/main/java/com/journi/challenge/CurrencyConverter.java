@@ -9,6 +9,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Optional;
 
 @Named
 @Singleton
@@ -42,15 +43,24 @@ public class CurrencyConverter {
         }
     }
 
-    public String getCurrencyForCountryCode(String countryCode) {
-        return supportedCountriesCurrency.getOrDefault(countryCode.toUpperCase(), "EUR");
+    public Optional<String> getCurrencyForCountryCode(String countryCode) {
+        if(supportedCountriesCurrency.containsKey(countryCode.toUpperCase())) {
+            return Optional.of(supportedCountriesCurrency.get(countryCode.toUpperCase()));
+        }
+        return Optional.empty();
     }
 
-    public Double convertEurToCurrency(String currencyCode, Double eurValue) {
-        return eurValue * currencyEurRate.getOrDefault(currencyCode, 1.0);
+    public Optional<Double> convertEurToCurrency(String currencyCode, Double eurValue) {
+        if(currencyEurRate.containsKey(currencyCode)) {
+            return Optional.of(eurValue * currencyEurRate.get(currencyCode));
+        }
+        return Optional.empty();
     }
 
-    public Double convertCurrencyToEur(String currencyCode, Double currencyValue) {
-        return currencyValue / currencyEurRate.getOrDefault(currencyCode, 1.0);
+    public Optional<Double> convertCurrencyToEur(String currencyCode, Double currencyValue) {
+        if(currencyEurRate.containsKey(currencyCode)) {
+            return Optional.of(currencyValue / currencyEurRate.get(currencyCode));
+        }
+        return Optional.empty();
     }
 }

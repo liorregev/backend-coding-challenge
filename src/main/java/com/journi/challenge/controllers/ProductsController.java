@@ -23,13 +23,13 @@ public class ProductsController {
 
     @GetMapping("/products")
     public List<ProductListItem> list(@RequestParam(name = "countryCode", defaultValue = "AT") String countryCode) {
-        final String currencyCode = currencyConverter.getCurrencyForCountryCode(countryCode);
+        final String currencyCode = currencyConverter.getCurrencyForCountryCode(countryCode).orElse("EUR");
         return productsRepository.list()
                 .stream()
                 .map((Product product) -> new ProductListItem(
                         product.getId(),
                         product.getDescription(),
-                        currencyConverter.convertEurToCurrency(currencyCode, product.getPrice()),
+                        currencyConverter.convertEurToCurrency(currencyCode, product.getPrice()).orElseGet(product::getPrice),
                         currencyCode))
                 .collect(Collectors.toList());
     }
