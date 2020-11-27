@@ -2,16 +2,17 @@ package com.journi.challenge.repositories;
 
 import com.journi.challenge.models.Purchase;
 import com.journi.challenge.models.PurchaseStats;
+
 import javax.inject.Named;
 import javax.inject.Singleton;
-import java.time.*;
+import java.time.Instant;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.TemporalAdjuster;
-import java.time.temporal.TemporalField;
-import java.util.*;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-import java.util.stream.StreamSupport;
 
 @Named
 @Singleton
@@ -30,7 +31,7 @@ public class PurchasesRepository {
     public PurchaseStats getLast30DaysStats() {
         DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE.withZone(ZoneId.of("UTC"));
 
-        LocalDateTime start = LocalDate.now().atStartOfDay().minusDays(30);
+        Instant start = Instant.now().truncatedTo(ChronoUnit.DAYS).minus(30, ChronoUnit.DAYS);
 
         List<Purchase> recentPurchases = allPurchases
                 .stream()
